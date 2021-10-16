@@ -1,9 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
-
 import { ImageGallery } from "./components/ImageGallery/ImageGallery";
 import { Searchbar } from "./components/Searchbar/Searchbar";
-
 import { Modal } from "./components/Modal/Modal";
 import { ToastContainer } from "react-toastify";
 
