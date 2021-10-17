@@ -13,6 +13,7 @@ export class ImageGallery extends Component {
     loading: false,
     currentPage: 1,
     status: "init",
+    loadingForButton: false,
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -38,6 +39,7 @@ export class ImageGallery extends Component {
           this.setState((prev) => ({
             images: [...prev.images, ...result],
             status: "success",
+            loadingForButton: false,
           }));
           this.scrollToLoadBtn();
         })
@@ -65,11 +67,14 @@ export class ImageGallery extends Component {
   };
 
   onClickLoadMore = () => {
-    this.setState((prev) => ({ currentPage: prev.currentPage + 1 }));
+    this.setState((prev) => ({
+      currentPage: prev.currentPage + 1,
+      loadingForButton: true,
+    }));
   };
 
   render() {
-    const { images, status } = this.state;
+    const { images, status, loadingForButton } = this.state;
     // console.log(images);
     if (status === "init") {
       return (
@@ -77,11 +82,7 @@ export class ImageGallery extends Component {
       );
     }
     if (status === "pending") {
-      return (
-        <div className={s.title}>
-          <LoadSpinner />
-        </div>
-      );
+      return <LoadSpinner />;
     }
 
     if (status === "success") {
@@ -110,7 +111,11 @@ export class ImageGallery extends Component {
                 )
               )}
           </ul>
-          <Button onClickLoadMore={this.onClickLoadMore} />
+          {loadingForButton ? (
+            <LoadSpinner />
+          ) : (
+            <Button onClickLoadMore={this.onClickLoadMore} />
+          )}
         </>
       );
     }
