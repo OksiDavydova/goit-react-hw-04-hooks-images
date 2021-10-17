@@ -113,14 +113,13 @@ export class ImageGallery extends Component {
               )}
           </ul>
 
-          <Button
-            onClickLoadMore={this.onClickLoadMore}
-            disabled={loadingForButton}
-          >
+          <Button onClickLoadMore={this.onClickLoadMore}>
             {loadingForButton && (
-              <i className={s.loader} style={{ marginRight: "5px" }}></i>
+              <>
+                <span className={s.loader}></span>
+                <span>Fetch data</span>
+              </>
             )}
-            {loadingForButton && <span>Fetch data</span>}
             {!loadingForButton && <span>Loading more</span>}
           </Button>
         </>

@@ -5,7 +5,7 @@ import s from "./Button.module.css";
 export function Button({ onClickLoadMore, children }) {
   return (
     <button type="button" onClick={onClickLoadMore} className={s.Button}>
-      {children}
+      <div className={s.Btn_children}>{children}</div>
     </button>
   );
 }
