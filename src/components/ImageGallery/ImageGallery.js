@@ -13,6 +13,7 @@ export class ImageGallery extends Component {
     loading: false,
     currentPage: 1,
     status: "init",
+    // loadingForButton: false,
     loadingForButton: false,
   };
 
@@ -111,11 +112,17 @@ export class ImageGallery extends Component {
                 )
               )}
           </ul>
-          {loadingForButton ? (
-            <LoadSpinner />
-          ) : (
-            <Button onClickLoadMore={this.onClickLoadMore} />
-          )}
+
+          <Button
+            onClickLoadMore={this.onClickLoadMore}
+            disabled={loadingForButton}
+          >
+            {loadingForButton && (
+              <i className={s.loader} style={{ marginRight: "5px" }}></i>
+            )}
+            {loadingForButton && <span>Fetch data</span>}
+            {!loadingForButton && <span>Loading more</span>}
+          </Button>
         </>
       );
     }
@@ -129,3 +136,10 @@ ImageGallery.propTypes = {
   searchResult: PropTypes.string,
   handleLargeImg: PropTypes.func,
 };
+
+//full screen
+// {loadingForButton ? (
+//             <LoadSpinner />
+//           ) : (
+//             <Button onClickLoadMore={this.onClickLoadMore} />
+//           )}
