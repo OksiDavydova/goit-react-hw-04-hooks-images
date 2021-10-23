@@ -1,4 +1,4 @@
-import { Component } from "react";
+import { useEffect } from "react";
 import PropTypes from "prop-types";
 import { createPortal } from "react-dom";
 import s from "./Modal.module.css";
@@ -6,51 +6,47 @@ import { ReactComponent as Close } from "../../Icons/Close.svg";
 
 const modalRoot = document.querySelector("#modal-root");
 
-export class Modal extends Component {
-  componentDidMount() {
-    window.addEventListener("keydown", this.handleKeyDown);
-  }
-  // componentDidUpdate(prevProps, prevState) {}
-  componentWillUnmount() {
-    window.removeEventListener("keydown", this.handleKeyDown);
-  }
+export function Modal({ toggleModal, largeImgURL, children }) {
+  useEffect(() => {
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  });
 
   // Escape keydown///
-  handleKeyDown = (e) => {
+  const handleKeyDown = (e) => {
     if (e.code === "Escape") {
-      this.props.toggleModal();
+      toggleModal();
     }
   };
 
-  handleClose = (e) => {
+  const handleClose = (e) => {
     if (e.currentTarget === e.target) {
-      this.props.toggleModal();
+      toggleModal();
     }
   };
 
-  handleCloseButton = () => {
-    this.props.toggleModal();
+  const handleCloseButton = () => {
+    toggleModal();
   };
 
-  render() {
-    const { children, largeImgURL } = this.props;
-    return createPortal(
-      <div className={s.Overlay} onClick={this.handleClose}>
-        <div className={s.Modal}>
-          <img src={largeImgURL} alt="Large version" width="960" />
-          {children}
-        </div>
-        <button
-          type="button"
-          className={s.ButtonClose}
-          onClick={this.handleCloseButton}
-        >
-          <Close width="50" />
-        </button>
-      </div>,
-      modalRoot
-    );
-  }
+  return createPortal(
+    <div className={s.Overlay} onClick={handleClose}>
+      <div className={s.Modal}>
+        <img src={largeImgURL} alt="Large version" width="960" />
+        {children}
+      </div>
+      <button
+        type="button"
+        className={s.ButtonClose}
+        onClick={handleCloseButton}
+      >
+        <Close width="50" />
+      </button>
+    </div>,
+    modalRoot
+  );
 }
 
 Modal.propTypes = {
