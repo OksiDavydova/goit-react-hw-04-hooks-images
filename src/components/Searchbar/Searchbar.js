@@ -17,6 +17,7 @@ export function Searchbar({ onSubmit }) {
     e.preventDefault();
 
     if (searchQuery.trim() === "") {
+      reset();
       return toast.error("Введите ключевое слово!", {
         theme: "dark",
       });

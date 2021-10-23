@@ -24,8 +24,6 @@ function App() {
     toggleModal();
   };
 
-  // const { showModal, largeImg, searchResult } = this.state;
-
   return (
     <div className="App">
       <Searchbar onSubmit={handleFormSubmit} />
